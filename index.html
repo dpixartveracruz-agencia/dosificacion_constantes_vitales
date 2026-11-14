@@ -35,47 +35,63 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    body {
+    html, body {
+      width: 100%;
+      max-width: 100vw;
+      overflow-x: hidden;
       background: linear-gradient(180deg, var(--bg-primary) 0%, #060B19 100%);
       color: var(--text-main);
       min-height: 100vh;
-      padding-bottom: 92px;
-      overflow-x: hidden;
     }
 
+    body {
+      padding-bottom: 115px;
+    }
+
+    /* ENCABEZADO SUPERIOR ANTI-DESBORDAMIENTO */
     header {
       position: sticky;
       top: 0;
       z-index: 50;
-      background: rgba(10, 17, 40, 0.92);
+      background: rgba(10, 17, 40, 0.94);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border-subtle);
-      padding: 12px 16px;
+      padding: 10px 14px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 8px;
+      width: 100%;
+    }
+
+    .brand-block {
+      min-width: 0;
+      flex: 1;
     }
 
     .brand-block h1 {
-      font-size: 1.02rem;
+      font-size: 1rem;
       font-weight: 800;
       letter-spacing: -0.02em;
       color: var(--text-main);
       display: flex;
       align-items: center;
       gap: 6px;
+      white-space: nowrap;
     }
 
     .caregiver-badge {
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       color: var(--accent-cyan);
       font-weight: 700;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
+      display: inline-block;
+      max-width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
       margin-top: 3px;
       background: rgba(0, 229, 255, 0.1);
-      padding: 2px 8px;
+      padding: 3px 8px;
       border-radius: 6px;
       border: 1px solid rgba(0, 229, 255, 0.25);
       cursor: pointer;
@@ -83,18 +99,20 @@
 
     .header-actions {
       display: flex;
-      gap: 8px;
+      gap: 6px;
       align-items: center;
+      flex-shrink: 0;
     }
 
     .status-pill {
-      font-size: 0.68rem;
-      padding: 5px 9px;
+      font-size: 0.65rem;
+      padding: 4px 8px;
       border-radius: 999px;
       font-weight: 700;
       background: rgba(16, 185, 129, 0.15);
       color: var(--ok-green);
       border: 1px solid rgba(16, 185, 129, 0.35);
+      white-space: nowrap;
     }
 
     .status-pill.offline {
@@ -108,22 +126,29 @@
       color: var(--accent-cyan);
       border: 1px solid var(--border-subtle);
       border-radius: 10px;
-      padding: 7px 10px;
-      font-size: 0.82rem;
+      padding: 6px 9px;
+      font-size: 0.78rem;
       cursor: pointer;
-      font-weight: 600;
+      font-weight: 700;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
     }
 
+    /* CONTENEDOR PRINCIPAL */
     main {
+      width: 100%;
       max-width: 540px;
       margin: 0 auto;
-      padding: 16px;
+      padding: 14px 12px;
     }
 
     .view-section {
       display: none;
       flex-direction: column;
-      gap: 16px;
+      gap: 14px;
+      width: 100%;
       animation: fadeIn 0.2s ease-out;
     }
 
@@ -140,8 +165,10 @@
       background: linear-gradient(145deg, var(--bg-card) 0%, var(--bg-secondary) 100%);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-lg);
-      padding: 16px;
+      padding: 15px 14px;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+      width: 100%;
+      overflow: hidden;
     }
 
     .bento-card.hero-alert {
@@ -150,44 +177,49 @@
     }
 
     .card-title {
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       text-transform: uppercase;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.04em;
       color: var(--accent-cyan);
-      font-weight: 700;
-      margin-bottom: 10px;
+      font-weight: 800;
+      margin-bottom: 12px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
     }
 
     .next-dose-time {
-      font-size: 2.1rem;
+      font-size: 2rem;
       font-weight: 800;
       color: #FFFFFF;
       line-height: 1.1;
     }
 
     .next-dose-med {
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       font-weight: 700;
       color: var(--accent-cyan);
       margin-top: 4px;
+      word-break: break-word;
     }
 
     .next-dose-sub {
-      font-size: 0.84rem;
+      font-size: 0.82rem;
       color: var(--text-muted);
       margin-bottom: 14px;
+      word-break: break-word;
     }
 
+    /* BOTONES */
     .btn-primary {
       width: 100%;
       background: linear-gradient(90deg, #00E5FF 0%, #00B4D8 100%);
       color: #061024;
       font-weight: 800;
-      font-size: 0.95rem;
-      padding: 13px 16px;
+      font-size: 0.92rem;
+      padding: 13px 14px;
       border: none;
       border-radius: var(--radius-md);
       cursor: pointer;
@@ -195,6 +227,7 @@
       justify-content: center;
       align-items: center;
       gap: 8px;
+      text-align: center;
       transition: transform 0.12s ease;
     }
 
@@ -207,10 +240,11 @@
       color: var(--text-main);
       border: 1px solid var(--border-subtle);
       font-weight: 600;
-      font-size: 0.85rem;
-      padding: 10px 14px;
-      border-radius: var(--radius-md);
+      font-size: 0.82rem;
+      padding: 9px 12px;
+      border-radius: 10px;
       cursor: pointer;
+      text-align: center;
     }
 
     .btn-danger {
@@ -218,33 +252,44 @@
       color: #FCA5A5;
       border: 1px solid rgba(239, 68, 68, 0.4);
       font-weight: 600;
-      font-size: 0.8rem;
-      padding: 8px 12px;
+      font-size: 0.82rem;
+      padding: 9px 12px;
       border-radius: 10px;
       cursor: pointer;
+      text-align: center;
     }
 
+    /* TARJETAS DE MEDICAMENTOS Y TOMAS (LAYOUT APILADO LIMPIO EN MÓVIL) */
     .dose-list {
       display: flex;
       flex-direction: column;
       gap: 10px;
+      width: 100%;
     }
 
     .dose-item {
-      background: rgba(10, 17, 40, 0.55);
+      background: rgba(10, 17, 40, 0.6);
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-left: 4px solid var(--accent-cyan);
       border-radius: 12px;
-      padding: 12px 14px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .dose-item-top {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-start;
       gap: 10px;
+      width: 100%;
     }
 
     .dose-item.taken {
       border-left-color: var(--ok-green);
-      opacity: 0.84;
+      opacity: 0.86;
     }
 
     .dose-item.overdue {
@@ -252,55 +297,96 @@
       background: rgba(239, 68, 68, 0.09);
     }
 
+    .dose-info {
+      min-width: 0;
+      flex: 1;
+    }
+
     .dose-info h4 {
-      font-size: 0.94rem;
-      font-weight: 700;
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #FFFFFF;
+      line-height: 1.3;
+      word-break: break-word;
     }
 
     .dose-info p {
-      font-size: 0.77rem;
+      font-size: 0.8rem;
       color: var(--text-muted);
-      margin-top: 2px;
+      margin-top: 4px;
+      line-height: 1.35;
+      word-break: break-word;
     }
 
     .audit-tag {
-      display: inline-block;
-      margin-top: 4px;
-      font-size: 0.7rem;
+      display: block;
+      margin-top: 6px;
+      font-size: 0.73rem;
       color: #38BDF8;
       font-weight: 600;
+      line-height: 1.3;
+      word-break: break-word;
     }
 
-    .form-grid {
+    .dose-actions-bar {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px;
+      gap: 8px;
+      width: 100%;
+      padding-top: 6px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    /* FORMULARIOS Y GRIDS CON PROTECCIÓN MINMAX(0, 1FR) PARA ANDROID */
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      width: 100%;
     }
 
     .form-group {
       display: flex;
       flex-direction: column;
       gap: 5px;
-      margin-bottom: 12px;
+      margin-bottom: 11px;
+      min-width: 0;
+      width: 100%;
+    }
+
+    .form-group.full-width {
+      grid-column: 1 / -1;
     }
 
     .form-group label {
-      font-size: 0.76rem;
+      font-size: 0.74rem;
       color: var(--text-muted);
       font-weight: 600;
+      line-height: 1.25;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .form-group label.wrap-label {
+      white-space: normal;
     }
 
     .form-group input,
     .form-group select,
     .form-group textarea {
+      width: 100%;
+      min-width: 0;
+      max-width: 100%;
       background: #0A1128;
-      border: 1px solid rgba(0, 229, 255, 0.25);
+      border: 1px solid rgba(0, 229, 255, 0.28);
       color: #FFFFFF;
-      padding: 11px 12px;
+      padding: 10px 10px;
       border-radius: 10px;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       font-weight: 600;
       outline: none;
+      appearance: auto;
     }
 
     .form-group input:focus,
@@ -309,15 +395,18 @@
       box-shadow: 0 0 0 2px rgba(0, 229, 255, 0.2);
     }
 
+    /* SEMÁFORO CLÍNICO EN VIVO */
     .vital-semaphore {
-      padding: 12px;
+      padding: 10px 12px;
       border-radius: 12px;
-      margin-bottom: 14px;
-      font-size: 0.85rem;
+      margin-bottom: 12px;
+      font-size: 0.8rem;
       font-weight: 700;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
       border: 1px solid rgba(16, 185, 129, 0.4);
       background: rgba(16, 185, 129, 0.12);
       color: #6EE7B7;
@@ -338,28 +427,33 @@
 
     @keyframes pulseCrit {
       0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.015); }
+      50% { transform: scale(1.01); }
     }
 
+    /* KPIs Y FILTROS DE GRÁFICAS */
     .segmented-control {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       background: #0A1128;
       padding: 4px;
       border-radius: 12px;
       border: 1px solid var(--border-subtle);
       margin-bottom: 10px;
+      width: 100%;
     }
 
     .segmented-btn {
       background: transparent;
       border: none;
       color: var(--text-muted);
-      padding: 9px;
+      padding: 8px 6px;
       font-weight: 700;
-      font-size: 0.83rem;
+      font-size: 0.78rem;
       border-radius: 9px;
       cursor: pointer;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .segmented-btn.active {
@@ -369,36 +463,40 @@
 
     .kpi-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      width: 100%;
     }
 
     .kpi-box {
       background: rgba(10, 17, 40, 0.65);
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 12px;
-      padding: 10px;
+      padding: 9px 6px;
       text-align: center;
+      min-width: 0;
     }
 
     .kpi-box .val {
-      font-size: 1.05rem;
+      font-size: 0.98rem;
       font-weight: 800;
       color: var(--accent-cyan);
     }
 
     .kpi-box .lbl {
-      font-size: 0.68rem;
+      font-size: 0.64rem;
       color: var(--text-muted);
       margin-top: 3px;
+      line-height: 1.2;
     }
 
     .chart-wrapper {
       position: relative;
-      height: 230px;
+      height: 220px;
       width: 100%;
     }
 
+    /* MODALES */
     .alarm-overlay {
       position: fixed;
       inset: 0;
@@ -409,7 +507,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: 20px;
+      padding: 16px;
       text-align: center;
     }
 
@@ -427,24 +525,25 @@
       background: var(--bg-card);
       border: 2px solid var(--accent-cyan);
       border-radius: 20px;
-      padding: 22px;
+      padding: 20px 16px;
       max-width: 400px;
       width: 100%;
-      max-height: 92vh;
+      max-height: 90vh;
       overflow-y: auto;
     }
 
+    /* BARRA DE NAVEGACIÓN INFERIOR */
     nav.bottom-nav {
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
       z-index: 90;
-      background: rgba(10, 17, 40, 0.96);
+      background: rgba(10, 17, 40, 0.97);
       backdrop-filter: blur(12px);
       border-top: 1px solid var(--border-subtle);
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       max-width: 540px;
       margin: 0 auto;
       padding: 8px 4px 12px;
@@ -458,7 +557,7 @@
       flex-direction: column;
       align-items: center;
       gap: 4px;
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       font-weight: 600;
       cursor: pointer;
     }
@@ -468,7 +567,7 @@
     }
 
     .nav-item span.icon {
-      font-size: 1.25rem;
+      font-size: 1.2rem;
     }
 
     #pdf-render-Root {
@@ -518,7 +617,7 @@
       <div class="bento-card">
         <div class="card-title">
           <span>📋 CRONOGRAMA Y AUDITORÍA DE HOY</span>
-          <button class="btn-secondary" style="padding:4px 9px; font-size:0.72rem;" onclick="syncWithGoogleSheets()">🔄 Sincronizar</button>
+          <button class="btn-secondary" style="padding:5px 10px; font-size:0.72rem;" onclick="syncWithGoogleSheets()">🔄 Sincronizar</button>
         </div>
         <div id="daily-dose-list" class="dose-list"></div>
       </div>
@@ -528,8 +627,8 @@
     <section id="view-vitales" class="view-section">
       <div class="bento-card">
         <div class="card-title">
-          <span>❤️ REGISTRO DE PRESIÓN Y OXIGENACIÓN</span>
-          <span>Cálculo PAM en Vivo</span>
+          <span>❤️ PRESIÓN Y OXIGENACIÓN</span>
+          <span>PAM en Vivo</span>
         </div>
 
         <div id="live-semaphore" class="vital-semaphore">
@@ -539,11 +638,11 @@
 
         <div class="form-grid">
           <div class="form-group">
-            <label>Sistólica (PAS mmHg)</label>
+            <label>Sistólica (PAS)</label>
             <input type="number" id="inp-pas" placeholder="120" inputmode="numeric" oninput="evaluateLiveVitals()" />
           </div>
           <div class="form-group">
-            <label>Diastólica (PAD mmHg)</label>
+            <label>Diastólica (PAD)</label>
             <input type="number" id="inp-pad" placeholder="80" inputmode="numeric" oninput="evaluateLiveVitals()" />
           </div>
           <div class="form-group">
@@ -557,7 +656,7 @@
         </div>
 
         <div class="form-group">
-          <label>Contexto Clínico de la Medición</label>
+          <label class="wrap-label">Contexto Clínico de la Medición</label>
           <select id="inp-contexto">
             <option value="AYUNAS">En Ayunas (Al despertar)</option>
             <option value="POST_MED">Post-Medicación (Control)</option>
@@ -567,7 +666,7 @@
         </div>
 
         <div class="form-group">
-          <label>Observaciones o Síntomas (Se firmará con tu nombre de cuidador)</label>
+          <label class="wrap-label">Observaciones o Síntomas (Se firmará con tu nombre)</label>
           <input type="text" id="inp-notas-vital" placeholder="Ej. Paciente tranquilo, sin mareo..." />
         </div>
 
@@ -586,13 +685,13 @@
     <section id="view-evolucion" class="view-section">
       <div class="bento-card">
         <div class="segmented-control">
-          <button id="btn-range-7" class="segmented-btn active" onclick="setChartRange(7)">Últimos 7 Días (Detalle)</button>
-          <button id="btn-range-30" class="segmented-btn" onclick="setChartRange(30)">Últimos 30 Días (Tendencia)</button>
+          <button id="btn-range-7" class="segmented-btn active" onclick="setChartRange(7)">7 Días (Detalle)</button>
+          <button id="btn-range-30" class="segmented-btn" onclick="setChartRange(30)">30 Días (Tendencia)</button>
         </div>
 
         <div class="form-group" style="margin-bottom:10px;">
           <select id="chart-context-filter" onchange="renderClinicalCharts()">
-            <option value="ALL">Mostrar todos los contextos clínicos</option>
+            <option value="ALL">Todos los contextos clínicos</option>
             <option value="AYUNAS">Solo mediciones en Ayunas</option>
             <option value="POST_MED">Solo mediciones Post-Medicación</option>
             <option value="SINTOMA">Solo mediciones con Síntomas</option>
@@ -617,7 +716,7 @@
 
       <div class="bento-card">
         <div class="card-title">
-          <span>📈 CURVA DE PRESIÓN ARTERIAL Y PULSO</span>
+          <span>📈 PRESIÓN ARTERIAL Y PULSO</span>
           <span style="color:#EF4444; font-size:0.7rem;">Límite: 140/90</span>
         </div>
         <div class="chart-wrapper">
@@ -627,7 +726,7 @@
 
       <div class="bento-card">
         <div class="card-title">
-          <span>🫁 CURVA DE SATURACIÓN DE OXÍGENO (SpO2)</span>
+          <span>🫁 SATURACIÓN DE OXÍGENO (SpO2)</span>
           <span style="color:#F59E0B; font-size:0.7rem;">Alerta &lt; 92%</span>
         </div>
         <div class="chart-wrapper" style="height: 185px;">
@@ -636,7 +735,7 @@
       </div>
 
       <button class="btn-primary" onclick="exportMedicalReportPDF()">
-        📄 EXPORTAR REPORTE CLÍNICO PDF PARA EL MÉDICO
+        📄 EXPORTAR REPORTE CLÍNICO PDF
       </button>
     </section>
 
@@ -645,7 +744,7 @@
       <div class="bento-card">
         <div class="card-title">
           <span id="med-form-title">➕ INCLUIR O AJUSTAR MEDICAMENTO</span>
-          <button id="cancel-edit-btn" class="btn-secondary" style="display:none; padding:3px 8px; font-size:0.7rem;" onclick="resetMedForm()">Cancelar Edición</button>
+          <button id="cancel-edit-btn" class="btn-secondary" style="display:none; padding:4px 8px; font-size:0.7rem;" onclick="resetMedForm()">Cancelar</button>
         </div>
 
         <input type="hidden" id="edit-old-id-med" value="" />
@@ -653,11 +752,11 @@
         <div class="form-grid">
           <div class="form-group">
             <label>Nombre Comercial</label>
-            <input type="text" id="med-nombre" placeholder="Ej. Ara II / Losartán" />
+            <input type="text" id="med-nombre" placeholder="Ej. Clauter / Ara II" />
           </div>
           <div class="form-group">
             <label>Sustancia Activa</label>
-            <input type="text" id="med-sustancia" placeholder="Ej. Losartán Potásico" />
+            <input type="text" id="med-sustancia" placeholder="Ej. Cilostazol" />
           </div>
           <div class="form-group">
             <label>Dosis</label>
@@ -666,20 +765,20 @@
           <div class="form-group">
             <label>Unidad</label>
             <select id="med-unidad">
-              <option value="mg">mg (Miligramos)</option>
-              <option value="mcg">mcg (Microgramos)</option>
-              <option value="ml">ml (Mililitros)</option>
-              <option value="tab">Tableta / Cápsula</option>
-              <option value="UI">UI (Unidades)</option>
+              <option value="mg">mg</option>
+              <option value="mcg">mcg</option>
+              <option value="ml">ml</option>
+              <option value="tab">Tableta / Cáp</option>
+              <option value="UI">UI</option>
             </select>
           </div>
           <div class="form-group">
             <label>Frecuencia</label>
             <select id="med-frecuencia" onchange="autoCalculateSchedules()">
-              <option value="24">Cada 24 horas (1 toma)</option>
-              <option value="12" selected>Cada 12 horas (2 tomas)</option>
-              <option value="8">Cada 8 horas (3 tomas)</option>
-              <option value="6">Cada 6 horas (4 tomas)</option>
+              <option value="24">Cada 24 h (1 toma)</option>
+              <option value="12" selected>Cada 12 h (2 tomas)</option>
+              <option value="8">Cada 8 h (3 tomas)</option>
+              <option value="6">Cada 6 h (4 tomas)</option>
             </select>
           </div>
           <div class="form-group">
@@ -689,12 +788,12 @@
         </div>
 
         <div class="form-group">
-          <label>Horarios Programados (Formato separado por comas HH:MM)</label>
+          <label class="wrap-label">Horarios Programados (Separados por comas HH:MM)</label>
           <input type="text" id="med-horarios-str" value="08:00, 20:00" />
         </div>
 
         <div class="form-group">
-          <label>Indicaciones o Motivo del Ajuste Médico</label>
+          <label class="wrap-label">Indicaciones o Motivo del Ajuste Médico</label>
           <input type="text" id="med-notas" placeholder="Ej. Ajuste por cardiólogo / Tomar en ayunas" />
         </div>
 
@@ -718,9 +817,9 @@
   <!-- MODAL DE ALERTA VISUAL Y SONORA -->
   <div id="alarm-modal" class="alarm-overlay">
     <div class="alarm-box">
-      <div style="font-size:3rem; margin-bottom:8px;">🚨</div>
-      <h2 id="alarm-title" style="color:var(--accent-cyan); font-size:1.25rem; margin-bottom:6px;">¡HORA DE MEDICAMENTO!</h2>
-      <p id="alarm-desc" style="color:#FFF; font-size:0.95rem; margin-bottom:18px;">Confirma la toma para detener la alerta acústica.</p>
+      <div style="font-size:2.8rem; margin-bottom:6px;">🚨</div>
+      <h2 id="alarm-title" style="color:var(--accent-cyan); font-size:1.2rem; margin-bottom:6px;">¡HORA DE MEDICAMENTO!</h2>
+      <p id="alarm-desc" style="color:#FFF; font-size:0.92rem; margin-bottom:18px;">Confirma la toma para detener la alerta acústica.</p>
       <div style="display:flex; flex-direction:column; gap:10px;">
         <button class="btn-primary" onclick="acknowledgeAlarmAndConfirm()">✅ CONFIRMAR O DETENER ALARMA</button>
         <button class="btn-secondary" onclick="snoozeActiveAlarm()">⏳ POSPONER 10 MINUTOS</button>
@@ -736,19 +835,19 @@
         <button class="btn-secondary" style="padding:4px 8px;" onclick="closeConfigModal()">✕</button>
       </div>
       <div class="form-group">
-        <label style="color:var(--accent-cyan);">👤 TU NOMBRE (Cuidador / Familiar que usa este celular)</label>
-        <input type="text" id="cfg-caregiver-name" placeholder="Ej. David / Enfermera Laura / Esposa" />
+        <label class="wrap-label" style="color:var(--accent-cyan);">👤 TU NOMBRE (Cuidador / Familiar que usa este celular)</label>
+        <input type="text" id="cfg-caregiver-name" placeholder="Ej. David / Enfermera Laura" />
       </div>
       <div class="form-group">
-        <label>🏥 Nombre del Paciente Monitoreado (Para el PDF Médico)</label>
+        <label class="wrap-label">🏥 Nombre del Paciente Monitoreado (Para el PDF)</label>
         <input type="text" id="cfg-patient-name" placeholder="Nombre del Paciente" />
       </div>
       <div class="form-group">
-        <label>🔗 URL de Google Apps Script (Termina en /exec)</label>
+        <label class="wrap-label">🔗 URL de Google Apps Script (Termina en /exec)</label>
         <input type="url" id="cfg-gas-url" placeholder="https://script.google.com/macros/s/.../exec" />
       </div>
       <div class="form-group">
-        <label>🔑 Llave Pública VAPID (Ya pre-cargada de fábrica)</label>
+        <label class="wrap-label">🔑 Llave Pública VAPID (Pre-cargada de fábrica)</label>
         <input type="text" id="cfg-vapid-key" value="BEDHGO3GNIc-2jExDZhCuj6_KShteOFgQlWi3pwceDsmiO8nLN9kLJRK6vbFgozmZ36zWiH5UrOG5oB_aawY9Pg" />
       </div>
       <div style="display:flex; flex-direction:column; gap:8px; margin-top:12px;">
@@ -806,10 +905,14 @@
     let bpChartInstance = null;
     let spo2ChartInstance = null;
 
-    /**
-     * Obtiene el nombre del cuidador registrado en este celular.
-     * Si aún no ha puesto su nombre, se lo solicita para firmar el registro.
-     */
+    function formatCleanSchedule(horariosJson) {
+      try {
+        const arr = typeof horariosJson === 'string' ? JSON.parse(horariosJson) : horariosJson;
+        if (Array.isArray(arr)) return arr.join(', ');
+      } catch (e) {}
+      return String(horariosJson || '').replace(/[\[\]"]/g, '');
+    }
+
     function ensureCaregiverName() {
       let caregiver = (localStorage.getItem('DPIX_CAREGIVER_NAME') || '').trim();
       if (!caregiver) {
@@ -831,7 +934,7 @@
       if (cg) {
         pill.textContent = `👤 Cuidador: ${cg} ✎`;
       } else {
-        pill.textContent = `👤 Cuidador: Sin registrar (Toca aquí) ✎`;
+        pill.textContent = `👤 Registrar Cuidador ✎`;
       }
     }
 
@@ -1112,22 +1215,24 @@
 
         return `
           <div class="dose-item ${item.tomado ? 'taken' : (isOverdue ? 'overdue' : '')}">
-            <div class="dose-info">
-              <h4>${item.hora} — ${item.nombre} (${item.dosis_txt})</h4>
-              <p>${item.sustancia} ${item.notas ? '• ' + item.notas : ''}</p>
-              ${item.tomado && item.observaciones_log
-                ? `<span class="audit-tag">👤 ${item.observaciones_log}</span>`
-                : ''
-              }
-            </div>
-            <div>
-              ${item.tomado
-                ? `<span style="color:var(--ok-green); font-weight:800; font-size:0.78rem;">✅ TOMADO</span>`
-                : `<button class="btn-secondary" style="border-color:var(--accent-cyan); color:var(--accent-cyan);"
-                     onclick="confirmDoseById('${item.id_toma}','${item.id_med}','${item.nombre}','${item.dosis_txt}','${item.hora}')">
-                     Confirmar
-                   </button>`
-              }
+            <div class="dose-item-top">
+              <div class="dose-info">
+                <h4>${item.hora} — ${item.nombre} (${item.dosis_txt})</h4>
+                <p>${item.sustancia} ${item.notas ? '• ' + item.notas : ''}</p>
+                ${item.tomado && item.observaciones_log
+                  ? `<span class="audit-tag">👤 ${item.observaciones_log}</span>`
+                  : ''
+                }
+              </div>
+              <div style="flex-shrink:0;">
+                ${item.tomado
+                  ? `<span style="color:var(--ok-green); font-weight:800; font-size:0.78rem;">✅ TOMADO</span>`
+                  : `<button class="btn-secondary" style="border-color:var(--accent-cyan); color:var(--accent-cyan);"
+                       onclick="confirmDoseById('${item.id_toma}','${item.id_med}','${item.nombre}','${item.dosis_txt}','${item.hora}')">
+                       Confirmar
+                     </button>`
+                }
+              </div>
             </div>
           </div>
         `;
@@ -1300,12 +1405,14 @@
 
         return `
           <div class="dose-item" style="border-left-color:${badgeColor};">
-            <div class="dose-info">
-              <h4>P/A: ${v.SISTOLICA_MMHG}/${v.DIASTOLICA_MMHG} mmHg <span style="font-size:0.78rem; color:var(--accent-cyan);">(PAM ${v.PAM_CALCULADA})</span></h4>
-              <p>SpO2: <strong>${v.SPO2_PORCENTAJE}%</strong> • Pulso: ${v.PULSO_LPM} lpm • ${v.CONTEXTO} (${fStr})</p>
-              ${v.NOTAS ? `<span class="audit-tag">👤 ${v.NOTAS}</span>` : ''}
+            <div class="dose-item-top">
+              <div class="dose-info">
+                <h4>P/A: ${v.SISTOLICA_MMHG}/${v.DIASTOLICA_MMHG} mmHg <span style="font-size:0.78rem; color:var(--accent-cyan);">(PAM ${v.PAM_CALCULADA})</span></h4>
+                <p>SpO2: <strong>${v.SPO2_PORCENTAJE}%</strong> • Pulso: ${v.PULSO_LPM} lpm • ${v.CONTEXTO} (${fStr})</p>
+                ${v.NOTAS ? `<span class="audit-tag">👤 ${v.NOTAS}</span>` : ''}
+              </div>
+              <span style="font-size:0.72rem; font-weight:800; color:${badgeColor}; flex-shrink:0;">${v.NIVEL_ALERTA}</span>
             </div>
-            <span style="font-size:0.72rem; font-weight:800; color:${badgeColor};">${v.NIVEL_ALERTA}</span>
           </div>
         `;
       }).join('');
@@ -1410,7 +1517,7 @@
           responsive: true,
           maintainAspectRatio: false,
           plugins: {
-            legend: { labels: { color: '#CBD5E1', font: { size: 11 } } }
+            legend: { labels: { color: '#CBD5E1', font: { size: 11 }, boxWidth: 20 } }
           },
           scales: {
             x: { ticks: { color: '#94A3B8', maxRotation: 40, font: { size: 10 } }, grid: { color: 'rgba(255,255,255,0.05)' } },
@@ -1442,7 +1549,7 @@
           responsive: true,
           maintainAspectRatio: false,
           plugins: {
-            legend: { labels: { color: '#CBD5E1', font: { size: 11 } } }
+            legend: { labels: { color: '#CBD5E1', font: { size: 11 }, boxWidth: 20 } }
           },
           scales: {
             x: { ticks: { color: '#94A3B8', font: { size: 10 } }, grid: { color: 'rgba(255,255,255,0.05)' } },
@@ -1494,7 +1601,7 @@
                 <td style="padding:6px; font-weight:700;">${m.NOMBRE_COMERCIAL}</td>
                 <td style="padding:6px;">${m.SUSTANCIA_ACTIVA}</td>
                 <td style="padding:6px;">${m.DOSIS_ACTUAL} ${m.UNIDAD} (c/${m.FRECUENCIA_HRS}h)</td>
-                <td style="padding:6px;">${m.HORARIOS_JSON}</td>
+                <td style="padding:6px;">${formatCleanSchedule(m.HORARIOS_JSON)}</td>
                 <td style="padding:6px;">${m.NOTAS_MEDICAS || '-'}</td>
               </tr>
             `).join('')}
@@ -1652,7 +1759,7 @@
       const med = appState.medicamentos.find(m => String(m.ID_MED) === String(idMed));
       if (!med) return;
 
-      document.getElementById('med-form-title').textContent = `🔄 AJUSTAR ESQUEMA: ${med.NOMBRE_COMERCIAL}`;
+      document.getElementById('med-form-title').textContent = `🔄 AJUSTAR: ${med.NOMBRE_COMERCIAL}`;
       document.getElementById('cancel-edit-btn').style.display = 'inline-block';
       document.getElementById('edit-old-id-med').value = med.ID_MED;
       document.getElementById('med-nombre').value = med.NOMBRE_COMERCIAL;
@@ -1661,9 +1768,7 @@
       document.getElementById('med-unidad').value = med.UNIDAD;
       document.getElementById('med-frecuencia').value = med.FRECUENCIA_HRS;
 
-      let hrs = [];
-      try { hrs = JSON.parse(med.HORARIOS_JSON); } catch (e) { hrs = [med.HORARIOS_JSON]; }
-      document.getElementById('med-horarios-str').value = hrs.join(', ');
+      document.getElementById('med-horarios-str').value = formatCleanSchedule(med.HORARIOS_JSON);
       document.getElementById('med-notas').value = String(med.NOTAS_MEDICAS || '').replace(/\s*\[(Alta|Ajustado) por:.*?\]/g, '');
       document.getElementById('save-med-btn').textContent = '💾 APLICAR AJUSTE MÉDICO';
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1710,12 +1815,12 @@
             <div class="dose-item">
               <div class="dose-info">
                 <h4>${m.NOMBRE_COMERCIAL} — ${m.DOSIS_ACTUAL} ${m.UNIDAD}</h4>
-                <p>${m.SUSTANCIA_ACTIVA} • Horarios: ${m.HORARIOS_JSON}</p>
+                <p>${m.SUSTANCIA_ACTIVA} • Horarios: <strong>${formatCleanSchedule(m.HORARIOS_JSON)}</strong></p>
                 ${m.NOTAS_MEDICAS ? `<span class="audit-tag">📋 ${m.NOTAS_MEDICAS}</span>` : ''}
               </div>
-              <div style="display:flex; gap:6px;">
-                <button class="btn-secondary" style="padding:6px 10px; font-size:0.75rem;" onclick="loadMedForAdjustment('${m.ID_MED}')">Ajustar</button>
-                <button class="btn-danger" onclick="suspendMedicationById('${m.ID_MED}')">Suspender</button>
+              <div class="dose-actions-bar">
+                <button class="btn-secondary" onclick="loadMedForAdjustment('${m.ID_MED}')">✏️ Ajustar</button>
+                <button class="btn-danger" onclick="suspendMedicationById('${m.ID_MED}')">⛔ Suspender</button>
               </div>
             </div>
           `).join('');
