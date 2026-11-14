@@ -6,7 +6,7 @@
  * ============================================================================
  */
 
-const CACHE_NAME = 'dpixart-vitalcontrol-v3';
+const CACHE_NAME = 'dpixart-vitalcontrol-v4';
 const DB_NAME = 'DPixART_VitalControl_DB';
 const DB_VERSION = 1;
 
