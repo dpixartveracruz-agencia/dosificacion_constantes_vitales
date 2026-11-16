@@ -1,12 +1,12 @@
 /**
  * ============================================================================
- * SERVICE WORKER (sw.js) - PERSISTENCIA OFFLINE Y ALERTAS WEB PUSH MULTI-CUIDADOR
- * Lee IndexedDB en segundo plano para mostrar el medicamento exacto al despertar
+ * SERVICE WORKER (sw.js) - MODO NETWORK-FIRST (SIEMPRE ACTUALIZADO)
+ * Prioriza la versión más nueva de Cloudflare y usa caché solo si estás Offline
  * Powered by DPixART Arte y Diseño
  * ============================================================================
  */
 
-const CACHE_NAME = 'dpixart-vitalcontrol-v4';
+const CACHE_NAME = 'dpixart-vitalcontrol-v5';
 const DB_NAME = 'DPixART_VitalControl_DB';
 const DB_VERSION = 1;
 
@@ -18,37 +18,45 @@ const ASSETS_TO_CACHE = [
   'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js'
 ];
 
+// Al instalar, fuerza descarga fresca desde el servidor (cache: 'reload')
 self.addEventListener('install', event => {
   self.skipWaiting();
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS_TO_CACHE))
+    caches.open(CACHE_NAME).then(cache => {
+      return Promise.all(
+        ASSETS_TO_CACHE.map(url =>
+          fetch(new Request(url, { cache: 'reload' }))
+            .then(res => cache.put(url, res))
+            .catch(() => {})
+        )
+      );
+    })
   );
 });
 
+// Al activar, borra todos los cachés viejos (v1, v2, v3, v4)
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(keys =>
       Promise.all(keys.map(k => (k !== CACHE_NAME ? caches.delete(k) : null)))
-    )
+    ).then(() => self.clients.claim())
   );
-  self.clients.claim();
 });
 
+// ESTRATEGIA NETWORK-FIRST: Siempre intenta traer el diseño más nuevo de Internet;
+// si no hay señal (Offline), entonces usa la copia guardada en el celular.
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
   if (event.request.url.includes('script.google.com')) return;
 
   event.respondWith(
-    caches.match(event.request).then(cached => {
-      const networkFetch = fetch(event.request)
-        .then(response => {
-          const clone = response.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
-          return response;
-        })
-        .catch(() => cached);
-      return cached || networkFetch;
-    })
+    fetch(event.request)
+      .then(networkResponse => {
+        const clone = networkResponse.clone();
+        caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
+        return networkResponse;
+      })
+      .catch(() => caches.match(event.request))
   );
 });
 

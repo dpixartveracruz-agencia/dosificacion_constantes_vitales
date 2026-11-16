@@ -4,8 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <meta name="theme-color" content="#0A1128" />
-  <title>VitalControl PWA — Multi-Cuidador</title>
-  <link rel="manifest" href="./manifest.json" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>VitalControl PWA — Multi-Cuidador v6</title>
+  <link rel="manifest" href="./manifest.json?v=6" />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
@@ -22,12 +25,12 @@
       --ok-green: #10B981;
       --warn-amber: #F59E0B;
       --crit-red: #EF4444;
-      --border-subtle: rgba(0, 229, 255, 0.18);
+      --border-subtle: rgba(0, 229, 255, 0.2);
       --radius-lg: 16px;
       --radius-md: 12px;
     }
 
-    * {
+    *, *::before, *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
@@ -37,7 +40,7 @@
 
     html, body {
       width: 100%;
-      max-width: 100vw;
+      max-width: 100%;
       overflow-x: hidden;
       background: linear-gradient(180deg, var(--bg-primary) 0%, #060B19 100%);
       color: var(--text-main);
@@ -45,18 +48,18 @@
     }
 
     body {
-      padding-bottom: 115px;
+      padding-bottom: 118px;
     }
 
-    /* ENCABEZADO SUPERIOR ANTI-DESBORDAMIENTO */
+    /* ENCABEZADO SUPERIOR COMPACTO Y ADAPTABLE */
     header {
       position: sticky;
       top: 0;
       z-index: 50;
-      background: rgba(10, 17, 40, 0.94);
+      background: rgba(10, 17, 40, 0.95);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border-subtle);
-      padding: 10px 14px;
+      padding: 10px 12px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -66,25 +69,35 @@
 
     .brand-block {
       min-width: 0;
-      flex: 1;
+      flex: 1 1 auto;
+      overflow: hidden;
     }
 
     .brand-block h1 {
-      font-size: 1rem;
+      font-size: 0.98rem;
       font-weight: 800;
-      letter-spacing: -0.02em;
       color: var(--text-main);
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
       white-space: nowrap;
+    }
+
+    .version-tag {
+      font-size: 0.62rem;
+      background: rgba(0, 229, 255, 0.18);
+      color: var(--accent-cyan);
+      padding: 1px 5px;
+      border-radius: 4px;
+      font-weight: 700;
     }
 
     .caregiver-badge {
       font-size: 0.7rem;
       color: var(--accent-cyan);
       font-weight: 700;
-      display: inline-block;
+      display: block;
+      width: fit-content;
       max-width: 100%;
       white-space: nowrap;
       overflow: hidden;
@@ -93,22 +106,22 @@
       background: rgba(0, 229, 255, 0.1);
       padding: 3px 8px;
       border-radius: 6px;
-      border: 1px solid rgba(0, 229, 255, 0.25);
+      border: 1px solid rgba(0, 229, 255, 0.28);
       cursor: pointer;
     }
 
     .header-actions {
       display: flex;
-      gap: 6px;
+      gap: 5px;
       align-items: center;
       flex-shrink: 0;
     }
 
     .status-pill {
-      font-size: 0.65rem;
-      padding: 4px 8px;
+      font-size: 0.62rem;
+      padding: 4px 7px;
       border-radius: 999px;
-      font-weight: 700;
+      font-weight: 800;
       background: rgba(16, 185, 129, 0.15);
       color: var(--ok-green);
       border: 1px solid rgba(16, 185, 129, 0.35);
@@ -125,23 +138,20 @@
       background: var(--bg-card);
       color: var(--accent-cyan);
       border: 1px solid var(--border-subtle);
-      border-radius: 10px;
-      padding: 6px 9px;
-      font-size: 0.78rem;
+      border-radius: 9px;
+      padding: 6px 8px;
+      font-size: 0.75rem;
       cursor: pointer;
       font-weight: 700;
       white-space: nowrap;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
     }
 
     /* CONTENEDOR PRINCIPAL */
     main {
       width: 100%;
-      max-width: 540px;
+      max-width: 520px;
       margin: 0 auto;
-      padding: 14px 12px;
+      padding: 12px 10px;
     }
 
     .view-section {
@@ -149,25 +159,20 @@
       flex-direction: column;
       gap: 14px;
       width: 100%;
-      animation: fadeIn 0.2s ease-out;
     }
 
     .view-section.active {
       display: flex;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(4px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
     .bento-card {
       background: linear-gradient(145deg, var(--bg-card) 0%, var(--bg-secondary) 100%);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-lg);
-      padding: 15px 14px;
+      padding: 14px 12px;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
       width: 100%;
+      max-width: 100%;
       overflow: hidden;
     }
 
@@ -177,9 +182,9 @@
     }
 
     .card-title {
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       text-transform: uppercase;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.03em;
       color: var(--accent-cyan);
       font-weight: 800;
       margin-bottom: 12px;
@@ -188,17 +193,18 @@
       align-items: center;
       flex-wrap: wrap;
       gap: 6px;
+      width: 100%;
     }
 
     .next-dose-time {
-      font-size: 2rem;
+      font-size: 1.95rem;
       font-weight: 800;
       color: #FFFFFF;
       line-height: 1.1;
     }
 
     .next-dose-med {
-      font-size: 1.05rem;
+      font-size: 1.02rem;
       font-weight: 700;
       color: var(--accent-cyan);
       margin-top: 4px;
@@ -218,30 +224,25 @@
       background: linear-gradient(90deg, #00E5FF 0%, #00B4D8 100%);
       color: #061024;
       font-weight: 800;
-      font-size: 0.92rem;
-      padding: 13px 14px;
+      font-size: 0.9rem;
+      padding: 13px 12px;
       border: none;
       border-radius: var(--radius-md);
       cursor: pointer;
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       text-align: center;
-      transition: transform 0.12s ease;
-    }
-
-    .btn-primary:active {
-      transform: scale(0.98);
     }
 
     .btn-secondary {
-      background: rgba(255, 255, 255, 0.06);
+      background: rgba(255, 255, 255, 0.07);
       color: var(--text-main);
       border: 1px solid var(--border-subtle);
-      font-weight: 600;
-      font-size: 0.82rem;
-      padding: 9px 12px;
+      font-weight: 700;
+      font-size: 0.8rem;
+      padding: 9px 10px;
       border-radius: 10px;
       cursor: pointer;
       text-align: center;
@@ -250,16 +251,16 @@
     .btn-danger {
       background: rgba(239, 68, 68, 0.16);
       color: #FCA5A5;
-      border: 1px solid rgba(239, 68, 68, 0.4);
-      font-weight: 600;
-      font-size: 0.82rem;
-      padding: 9px 12px;
+      border: 1px solid rgba(239, 68, 68, 0.45);
+      font-weight: 700;
+      font-size: 0.8rem;
+      padding: 9px 10px;
       border-radius: 10px;
       cursor: pointer;
       text-align: center;
     }
 
-    /* TARJETAS DE MEDICAMENTOS Y TOMAS (LAYOUT APILADO LIMPIO EN MÓVIL) */
+    /* TARJETAS DE MEDICAMENTOS Y TOMAS 100% APILADAS (SIN ENCIMARSE) */
     .dose-list {
       display: flex;
       flex-direction: column;
@@ -268,8 +269,8 @@
     }
 
     .dose-item {
-      background: rgba(10, 17, 40, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(10, 17, 40, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.09);
       border-left: 4px solid var(--accent-cyan);
       border-radius: 12px;
       padding: 12px;
@@ -279,17 +280,9 @@
       width: 100%;
     }
 
-    .dose-item-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 10px;
-      width: 100%;
-    }
-
     .dose-item.taken {
       border-left-color: var(--ok-green);
-      opacity: 0.86;
+      opacity: 0.88;
     }
 
     .dose-item.overdue {
@@ -298,12 +291,12 @@
     }
 
     .dose-info {
+      width: 100%;
       min-width: 0;
-      flex: 1;
     }
 
     .dose-info h4 {
-      font-size: 0.95rem;
+      font-size: 0.94rem;
       font-weight: 800;
       color: #FFFFFF;
       line-height: 1.3;
@@ -321,72 +314,62 @@
     .audit-tag {
       display: block;
       margin-top: 6px;
-      font-size: 0.73rem;
+      font-size: 0.74rem;
       color: #38BDF8;
       font-weight: 600;
-      line-height: 1.3;
+      line-height: 1.35;
       word-break: break-word;
     }
 
     .dose-actions-bar {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 8px;
       width: 100%;
-      padding-top: 6px;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding-top: 8px;
+      border-top: 1px solid rgba(255, 255, 255, 0.07);
     }
 
-    /* FORMULARIOS Y GRIDS CON PROTECCIÓN MINMAX(0, 1FR) PARA ANDROID */
-    .form-grid {
+    /* FORMULARIOS BLINDADOS CONTRA DESBORDAMIENTO EN ANDROID */
+    .form-row-2col {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
+      gap: 8px;
       width: 100%;
     }
 
     .form-group {
       display: flex;
       flex-direction: column;
-      gap: 5px;
-      margin-bottom: 11px;
+      gap: 4px;
+      margin-bottom: 10px;
       min-width: 0;
       width: 100%;
     }
 
-    .form-group.full-width {
-      grid-column: 1 / -1;
-    }
-
     .form-group label {
-      font-size: 0.74rem;
+      font-size: 0.73rem;
       color: var(--text-muted);
       font-weight: 600;
       line-height: 1.25;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .form-group label.wrap-label {
-      white-space: normal;
+      word-break: break-word;
     }
 
     .form-group input,
     .form-group select,
     .form-group textarea {
+      display: block;
       width: 100%;
       min-width: 0;
       max-width: 100%;
       background: #0A1128;
-      border: 1px solid rgba(0, 229, 255, 0.28);
+      border: 1px solid rgba(0, 229, 255, 0.3);
       color: #FFFFFF;
-      padding: 10px 10px;
+      padding: 10px 9px;
       border-radius: 10px;
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       font-weight: 600;
       outline: none;
-      appearance: auto;
     }
 
     .form-group input:focus,
@@ -397,10 +380,10 @@
 
     /* SEMÁFORO CLÍNICO EN VIVO */
     .vital-semaphore {
-      padding: 10px 12px;
+      padding: 10px 11px;
       border-radius: 12px;
       margin-bottom: 12px;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
       font-weight: 700;
       display: flex;
       justify-content: space-between;
@@ -410,6 +393,7 @@
       border: 1px solid rgba(16, 185, 129, 0.4);
       background: rgba(16, 185, 129, 0.12);
       color: #6EE7B7;
+      width: 100%;
     }
 
     .vital-semaphore.warn {
@@ -422,12 +406,6 @@
       border-color: rgba(239, 68, 68, 0.6);
       background: rgba(239, 68, 68, 0.2);
       color: #FCA5A5;
-      animation: pulseCrit 1.2s infinite;
-    }
-
-    @keyframes pulseCrit {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.01); }
     }
 
     /* KPIs Y FILTROS DE GRÁFICAS */
@@ -446,14 +424,12 @@
       background: transparent;
       border: none;
       color: var(--text-muted);
-      padding: 8px 6px;
+      padding: 8px 4px;
       font-weight: 700;
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       border-radius: 9px;
       cursor: pointer;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      text-align: center;
     }
 
     .segmented-btn.active {
@@ -464,27 +440,27 @@
     .kpi-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 8px;
+      gap: 6px;
       width: 100%;
     }
 
     .kpi-box {
       background: rgba(10, 17, 40, 0.65);
       border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 12px;
-      padding: 9px 6px;
+      border-radius: 10px;
+      padding: 8px 4px;
       text-align: center;
       min-width: 0;
     }
 
     .kpi-box .val {
-      font-size: 0.98rem;
+      font-size: 0.92rem;
       font-weight: 800;
       color: var(--accent-cyan);
     }
 
     .kpi-box .lbl {
-      font-size: 0.64rem;
+      font-size: 0.62rem;
       color: var(--text-muted);
       margin-top: 3px;
       line-height: 1.2;
@@ -492,7 +468,7 @@
 
     .chart-wrapper {
       position: relative;
-      height: 220px;
+      height: 215px;
       width: 100%;
     }
 
@@ -507,26 +483,20 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      padding: 16px;
+      padding: 14px;
       text-align: center;
     }
 
     .alarm-overlay.active {
       display: flex;
-      animation: flashBg 1.5s infinite;
-    }
-
-    @keyframes flashBg {
-      0%, 100% { background: rgba(10, 17, 40, 0.96); }
-      50% { background: rgba(185, 28, 28, 0.45); }
     }
 
     .alarm-box {
       background: var(--bg-card);
       border: 2px solid var(--accent-cyan);
-      border-radius: 20px;
-      padding: 20px 16px;
-      max-width: 400px;
+      border-radius: 18px;
+      padding: 18px 14px;
+      max-width: 390px;
       width: 100%;
       max-height: 90vh;
       overflow-y: auto;
@@ -539,14 +509,14 @@
       left: 0;
       right: 0;
       z-index: 90;
-      background: rgba(10, 17, 40, 0.97);
+      background: rgba(10, 17, 40, 0.98);
       backdrop-filter: blur(12px);
       border-top: 1px solid var(--border-subtle);
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      max-width: 540px;
+      max-width: 520px;
       margin: 0 auto;
-      padding: 8px 4px 12px;
+      padding: 8px 2px 12px;
     }
 
     .nav-item {
@@ -556,9 +526,9 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 4px;
-      font-size: 0.68rem;
-      font-weight: 600;
+      gap: 3px;
+      font-size: 0.67rem;
+      font-weight: 700;
       cursor: pointer;
     }
 
@@ -567,7 +537,7 @@
     }
 
     .nav-item span.icon {
-      font-size: 1.2rem;
+      font-size: 1.18rem;
     }
 
     #pdf-render-Root {
@@ -586,7 +556,7 @@
 
   <header>
     <div class="brand-block">
-      <h1>🩺 VitalControl</h1>
+      <h1>🩺 VitalControl <span class="version-tag">v6</span></h1>
       <div id="active-caregiver-pill" class="caregiver-badge" onclick="openConfigModal()" title="Cambiar nombre de cuidador">
         👤 Cuidador: Sin registrar ✎
       </div>
@@ -594,7 +564,7 @@
     <div class="header-actions">
       <div id="net-status" class="status-pill">ONLINE</div>
       <button class="icon-btn" onclick="testAcousticAlarm()" title="Probar Alerta Sonora">🔔 Test</button>
-      <button class="icon-btn" onclick="openConfigModal()" title="Configuración y Registro de Cuidador">⚙️</button>
+      <button class="icon-btn" onclick="openConfigModal()" title="Configuración">⚙️</button>
     </div>
   </header>
 
@@ -616,7 +586,7 @@
 
       <div class="bento-card">
         <div class="card-title">
-          <span>📋 CRONOGRAMA Y AUDITORÍA DE HOY</span>
+          <span>📋 CRONOGRAMA DE HOY</span>
           <button class="btn-secondary" style="padding:5px 10px; font-size:0.72rem;" onclick="syncWithGoogleSheets()">🔄 Sincronizar</button>
         </div>
         <div id="daily-dose-list" class="dose-list"></div>
@@ -632,11 +602,11 @@
         </div>
 
         <div id="live-semaphore" class="vital-semaphore">
-          <span id="semaphore-label">🟢 RANGO NORMAL ESPERADO</span>
+          <span id="semaphore-label">🟢 RANGO NORMAL</span>
           <span id="live-pam-badge">PAM: -- mmHg</span>
         </div>
 
-        <div class="form-grid">
+        <div class="form-row-2col">
           <div class="form-group">
             <label>Sistólica (PAS)</label>
             <input type="number" id="inp-pas" placeholder="120" inputmode="numeric" oninput="evaluateLiveVitals()" />
@@ -645,6 +615,9 @@
             <label>Diastólica (PAD)</label>
             <input type="number" id="inp-pad" placeholder="80" inputmode="numeric" oninput="evaluateLiveVitals()" />
           </div>
+        </div>
+
+        <div class="form-row-2col">
           <div class="form-group">
             <label>Oxigenación SpO2 (%)</label>
             <input type="number" id="inp-spo2" placeholder="97" inputmode="numeric" oninput="evaluateLiveVitals()" />
@@ -656,7 +629,7 @@
         </div>
 
         <div class="form-group">
-          <label class="wrap-label">Contexto Clínico de la Medición</label>
+          <label>Contexto Clínico de la Medición</label>
           <select id="inp-contexto">
             <option value="AYUNAS">En Ayunas (Al despertar)</option>
             <option value="POST_MED">Post-Medicación (Control)</option>
@@ -666,7 +639,7 @@
         </div>
 
         <div class="form-group">
-          <label class="wrap-label">Observaciones o Síntomas (Se firmará con tu nombre)</label>
+          <label>Observaciones o Síntomas (Se firmará con tu nombre)</label>
           <input type="text" id="inp-notas-vital" placeholder="Ej. Paciente tranquilo, sin mareo..." />
         </div>
 
@@ -705,11 +678,11 @@
           </div>
           <div class="kpi-box">
             <div id="kpi-spo2-avg" class="val">--%</div>
-            <div id="kpi-spo2-min" class="lbl">SpO2 Prom (Mín --%)</div>
+            <div id="kpi-spo2-min" class="lbl">SpO2 (Mín --%)</div>
           </div>
           <div class="kpi-box">
             <div id="kpi-adherence" class="val">--%</div>
-            <div class="lbl">Adherencia Tomas</div>
+            <div class="lbl">Adherencia</div>
           </div>
         </div>
       </div>
@@ -726,7 +699,7 @@
 
       <div class="bento-card">
         <div class="card-title">
-          <span>🫁 SATURACIÓN DE OXÍGENO (SpO2)</span>
+          <span>🫁 OXIGENACIÓN (SpO2)</span>
           <span style="color:#F59E0B; font-size:0.7rem;">Alerta &lt; 92%</span>
         </div>
         <div class="chart-wrapper" style="height: 185px;">
@@ -739,7 +712,7 @@
       </button>
     </section>
 
-    <!-- VISTA 4: BOTIQUÍN Y AJUSTES MÉDICOS -->
+    <!-- VISTA 4: BOTIQUÍN Y AJUSTES MÉDICOS (SIN CORTES EN ANDROID) -->
     <section id="view-botiquin" class="view-section">
       <div class="bento-card">
         <div class="card-title">
@@ -749,29 +722,34 @@
 
         <input type="hidden" id="edit-old-id-med" value="" />
 
-        <div class="form-grid">
+        <div class="form-group">
+          <label>Nombre Comercial del Medicamento</label>
+          <input type="text" id="med-nombre" placeholder="Ej. Clauter / Memantina / Losartán" />
+        </div>
+
+        <div class="form-group">
+          <label>Sustancia Activa</label>
+          <input type="text" id="med-sustancia" placeholder="Ej. Cilostazol / Memantina" />
+        </div>
+
+        <div class="form-row-2col">
           <div class="form-group">
-            <label>Nombre Comercial</label>
-            <input type="text" id="med-nombre" placeholder="Ej. Clauter / Ara II" />
-          </div>
-          <div class="form-group">
-            <label>Sustancia Activa</label>
-            <input type="text" id="med-sustancia" placeholder="Ej. Cilostazol" />
-          </div>
-          <div class="form-group">
-            <label>Dosis</label>
+            <label>Dosis Numérica</label>
             <input type="number" id="med-dosis" placeholder="50" inputmode="decimal" />
           </div>
           <div class="form-group">
             <label>Unidad</label>
             <select id="med-unidad">
-              <option value="mg">mg</option>
+              <option value="mg">mg (Miligramos)</option>
               <option value="mcg">mcg</option>
-              <option value="ml">ml</option>
+              <option value="ml">ml (Mililitros)</option>
               <option value="tab">Tableta / Cáp</option>
               <option value="UI">UI</option>
             </select>
           </div>
+        </div>
+
+        <div class="form-row-2col">
           <div class="form-group">
             <label>Frecuencia</label>
             <select id="med-frecuencia" onchange="autoCalculateSchedules()">
@@ -788,13 +766,13 @@
         </div>
 
         <div class="form-group">
-          <label class="wrap-label">Horarios Programados (Separados por comas HH:MM)</label>
+          <label>Horarios Programados (Separados por comas HH:MM)</label>
           <input type="text" id="med-horarios-str" value="08:00, 20:00" />
         </div>
 
         <div class="form-group">
-          <label class="wrap-label">Indicaciones o Motivo del Ajuste Médico</label>
-          <input type="text" id="med-notas" placeholder="Ej. Ajuste por cardiólogo / Tomar en ayunas" />
+          <label>Indicaciones o Motivo del Ajuste Médico</label>
+          <input type="text" id="med-notas" placeholder="Ej. Indicación del médico / Tomar con alimentos" />
         </div>
 
         <button id="save-med-btn" class="btn-primary" onclick="submitMedicationForm()">
@@ -817,9 +795,9 @@
   <!-- MODAL DE ALERTA VISUAL Y SONORA -->
   <div id="alarm-modal" class="alarm-overlay">
     <div class="alarm-box">
-      <div style="font-size:2.8rem; margin-bottom:6px;">🚨</div>
-      <h2 id="alarm-title" style="color:var(--accent-cyan); font-size:1.2rem; margin-bottom:6px;">¡HORA DE MEDICAMENTO!</h2>
-      <p id="alarm-desc" style="color:#FFF; font-size:0.92rem; margin-bottom:18px;">Confirma la toma para detener la alerta acústica.</p>
+      <div style="font-size:2.6rem; margin-bottom:6px;">🚨</div>
+      <h2 id="alarm-title" style="color:var(--accent-cyan); font-size:1.15rem; margin-bottom:6px;">¡HORA DE MEDICAMENTO!</h2>
+      <p id="alarm-desc" style="color:#FFF; font-size:0.9rem; margin-bottom:16px;">Confirma la toma para detener la alerta acústica.</p>
       <div style="display:flex; flex-direction:column; gap:10px;">
         <button class="btn-primary" onclick="acknowledgeAlarmAndConfirm()">✅ CONFIRMAR O DETENER ALARMA</button>
         <button class="btn-secondary" onclick="snoozeActiveAlarm()">⏳ POSPONER 10 MINUTOS</button>
@@ -827,32 +805,33 @@
     </div>
   </div>
 
-  <!-- MODAL DE CONFIGURACIÓN MULTI-CUIDADOR Y BACKEND GAS -->
-  <div id="config-modal" class="alarm-overlay" style="animation:none;">
+  <!-- MODAL DE CONFIGURACIÓN MULTI-CUIDADOR Y DESTRABE DE CACHÉ -->
+  <div id="config-modal" class="alarm-overlay">
     <div class="alarm-box" style="text-align:left;">
       <div class="card-title">
-        <span>⚙️ REGISTRO DE CUIDADOR Y CONEXIÓN</span>
+        <span>⚙️ CUIDADOR Y CONEXIÓN (v6)</span>
         <button class="btn-secondary" style="padding:4px 8px;" onclick="closeConfigModal()">✕</button>
       </div>
       <div class="form-group">
-        <label class="wrap-label" style="color:var(--accent-cyan);">👤 TU NOMBRE (Cuidador / Familiar que usa este celular)</label>
-        <input type="text" id="cfg-caregiver-name" placeholder="Ej. David / Enfermera Laura" />
+        <label style="color:var(--accent-cyan);">👤 TU NOMBRE (Cuidador / Familiar que usa este celular)</label>
+        <input type="text" id="cfg-caregiver-name" placeholder="Ej. David Yeh Celular" />
       </div>
       <div class="form-group">
-        <label class="wrap-label">🏥 Nombre del Paciente Monitoreado (Para el PDF)</label>
+        <label>🏥 Nombre del Paciente Monitoreado</label>
         <input type="text" id="cfg-patient-name" placeholder="Nombre del Paciente" />
       </div>
       <div class="form-group">
-        <label class="wrap-label">🔗 URL de Google Apps Script (Termina en /exec)</label>
+        <label>🔗 URL de Google Apps Script (Termina en /exec)</label>
         <input type="url" id="cfg-gas-url" placeholder="https://script.google.com/macros/s/.../exec" />
       </div>
       <div class="form-group">
-        <label class="wrap-label">🔑 Llave Pública VAPID (Pre-cargada de fábrica)</label>
+        <label>🔑 Llave Pública VAPID</label>
         <input type="text" id="cfg-vapid-key" value="BEDHGO3GNIc-2jExDZhCuj6_KShteOFgQlWi3pwceDsmiO8nLN9kLJRK6vbFgozmZ36zWiH5UrOG5oB_aawY9Pg" />
       </div>
       <div style="display:flex; flex-direction:column; gap:8px; margin-top:12px;">
         <button class="btn-primary" onclick="saveSystemSettings()">💾 1. GUARDAR MI NOMBRE Y SINCRONIZAR</button>
         <button class="btn-secondary" onclick="requestNativeNotificationPermission()">📲 2. Activar Notificaciones Push en este Celular</button>
+        <button class="btn-danger" onclick="forceHardResetCache()">🧹 3. Forzar Actualización de Diseño (Limpiar Caché)</button>
       </div>
     </div>
   </div>
@@ -879,6 +858,7 @@
   </nav>
 
   <script>
+    const APP_UI_VERSION = 'v6';
     const DEFAULT_VAPID_PUBLIC_KEY = "BEDHGO3GNIc-2jExDZhCuj6_KShteOFgQlWi3pwceDsmiO8nLN9kLJRK6vbFgozmZ36zWiH5UrOG5oB_aawY9Pg";
     const DB_NAME = 'DPixART_VitalControl_DB';
     const DB_VERSION = 1;
@@ -905,6 +885,30 @@
     let bpChartInstance = null;
     let spo2ChartInstance = null;
 
+    /**
+     * Purga automática e inmediata de cualquier caché o Service Worker antiguo
+     */
+    async function forceHardResetCache() {
+      try {
+        if ('serviceWorker' in navigator) {
+          const regs = await navigator.serviceWorker.getRegistrations();
+          for (const reg of regs) {
+            await reg.unregister();
+          }
+        }
+        if ('caches' in window) {
+          const keys = await caches.keys();
+          for (const k of keys) {
+            await caches.delete(k);
+          }
+        }
+        localStorage.setItem('DPIX_LAST_UI_VER', APP_UI_VERSION);
+        window.location.replace(window.location.pathname + '?v=' + Date.now());
+      } catch (e) {
+        window.location.reload(true);
+      }
+    }
+
     function formatCleanSchedule(horariosJson) {
       try {
         const arr = typeof horariosJson === 'string' ? JSON.parse(horariosJson) : horariosJson;
@@ -922,7 +926,7 @@
           localStorage.setItem('DPIX_CAREGIVER_NAME', caregiver);
           updateCaregiverBadgeUI();
         } else {
-          caregiver = 'Cuidador sin nombre';
+          caregiver = 'Cuidador';
         }
       }
       return caregiver;
@@ -973,21 +977,6 @@
         req.onsuccess = () => {
           const rows = req.result || [];
           rows.forEach(r => { if (r.val) appState[r.key] = r.val; });
-
-          if (!appState.medicamentos || appState.medicamentos.length === 0) {
-            appState.medicamentos = [{
-              ID_MED: 'MED-001',
-              NOMBRE_COMERCIAL: 'Ejemplo Fármaco',
-              SUSTANCIA_ACTIVA: 'Sustancia Base',
-              DOSIS_ACTUAL: 50,
-              UNIDAD: 'mg',
-              FRECUENCIA_HRS: 12,
-              HORARIOS_JSON: '["08:00","20:00"]',
-              NOTAS_MEDICAS: 'Tomar con alimentos',
-              ESTADO: 'ACTIVO',
-              FECHA_AJUSTE: getTodayISO()
-            }];
-          }
           resolve();
         };
       });
@@ -1004,7 +993,7 @@
           });
           return;
         } catch (e) {
-          console.warn('Fallo red directa, guardando en cola offline:', e);
+          console.warn('Guardando en cola offline:', e);
         }
       }
       if (!dbInstance) return;
@@ -1045,7 +1034,7 @@
       }
       try {
         await flushOfflineOutbox();
-        const res = await fetch(gasUrl + '?action=SYNC_ALL');
+        const res = await fetch(gasUrl + '?action=SYNC_ALL&t=' + Date.now());
         const json = await res.json();
         if (json.status === 'success' && json.data) {
           appState.medicamentos = json.data.medicamentos || [];
@@ -1080,9 +1069,7 @@
           osc.start(ctx.currentTime + idx * 0.22);
           osc.stop(ctx.currentTime + idx * 0.22 + 0.2);
         });
-      } catch (e) {
-        console.warn('Web Audio API requiere interacción previa:', e);
-      }
+      } catch (e) {}
     }
 
     function triggerFullVisualSonicAlarm(title, description, doseObj = null) {
@@ -1215,24 +1202,22 @@
 
         return `
           <div class="dose-item ${item.tomado ? 'taken' : (isOverdue ? 'overdue' : '')}">
-            <div class="dose-item-top">
-              <div class="dose-info">
-                <h4>${item.hora} — ${item.nombre} (${item.dosis_txt})</h4>
-                <p>${item.sustancia} ${item.notas ? '• ' + item.notas : ''}</p>
-                ${item.tomado && item.observaciones_log
-                  ? `<span class="audit-tag">👤 ${item.observaciones_log}</span>`
-                  : ''
-                }
-              </div>
-              <div style="flex-shrink:0;">
-                ${item.tomado
-                  ? `<span style="color:var(--ok-green); font-weight:800; font-size:0.78rem;">✅ TOMADO</span>`
-                  : `<button class="btn-secondary" style="border-color:var(--accent-cyan); color:var(--accent-cyan);"
-                       onclick="confirmDoseById('${item.id_toma}','${item.id_med}','${item.nombre}','${item.dosis_txt}','${item.hora}')">
-                       Confirmar
-                     </button>`
-                }
-              </div>
+            <div class="dose-info">
+              <h4>⏰ ${item.hora} — ${item.nombre} (${item.dosis_txt})</h4>
+              <p>${item.sustancia} ${item.notas ? '• ' + item.notas : ''}</p>
+              ${item.tomado && item.observaciones_log
+                ? `<span class="audit-tag">👤 ${item.observaciones_log}</span>`
+                : ''
+              }
+            </div>
+            <div>
+              ${item.tomado
+                ? `<span style="color:var(--ok-green); font-weight:800; font-size:0.8rem;">✅ TOMADO</span>`
+                : `<button class="btn-primary" style="padding:10px;"
+                     onclick="confirmDoseById('${item.id_toma}','${item.id_med}','${item.nombre}','${item.dosis_txt}','${item.hora}')">
+                     ✅ Confirmar Toma
+                   </button>`
+              }
             </div>
           </div>
         `;
@@ -1280,25 +1265,6 @@
       await enqueueAction('LOG_DOSE', newLog);
     }
 
-    setInterval(() => {
-      const now = new Date();
-      const hh = String(now.getHours()).padStart(2, '0');
-      const mm = String(now.getMinutes()).padStart(2, '0');
-      const currentHM = `${hh}:${mm}`;
-
-      if (appState.nextHeroDose && !appState.nextHeroDose.tomado && appState.nextHeroDose.hora === currentHM) {
-        const keyFired = `FIRED_${appState.nextHeroDose.id_toma}`;
-        if (!sessionStorage.getItem(keyFired)) {
-          sessionStorage.setItem(keyFired, '1');
-          triggerFullVisualSonicAlarm(
-            `⏰ TOMA PROGRAMADA (${currentHM})`,
-            `${appState.nextHeroDose.nombre} — Dosis: ${appState.nextHeroDose.dosis_txt}`,
-            appState.nextHeroDose
-          );
-        }
-      }
-    }, 45000);
-
     function evaluateLiveVitals() {
       const pas = Number(document.getElementById('inp-pas').value) || 0;
       const pad = Number(document.getElementById('inp-pad').value) || 0;
@@ -1325,14 +1291,14 @@
       if ((pas >= pasCrit) || (pad >= padCrit) || (spo2 > 0 && spo2 < spo2Min)) {
         nivel = 'CRITICO';
         semEl.className = 'vital-semaphore crit';
-        lblEl.textContent = '🔴 ALERTA CRÍTICA: FUERA DE RANGO';
+        lblEl.textContent = '🔴 ALERTA CRÍTICA';
       } else if ((pas >= pasWarn) || (pad >= padWarn) || (spo2 >= spo2Min && spo2 <= 94)) {
         nivel = 'PRECAUCION';
         semEl.className = 'vital-semaphore warn';
-        lblEl.textContent = '🟡 PRECAUCIÓN: VIGILAR EVOLUCIÓN';
+        lblEl.textContent = '🟡 PRECAUCIÓN';
       } else {
         semEl.className = 'vital-semaphore';
-        lblEl.textContent = '🟢 PARÁMETROS EN RANGO NORMAL';
+        lblEl.textContent = '🟢 RANGO NORMAL';
       }
       return nivel;
     }
@@ -1405,13 +1371,10 @@
 
         return `
           <div class="dose-item" style="border-left-color:${badgeColor};">
-            <div class="dose-item-top">
-              <div class="dose-info">
-                <h4>P/A: ${v.SISTOLICA_MMHG}/${v.DIASTOLICA_MMHG} mmHg <span style="font-size:0.78rem; color:var(--accent-cyan);">(PAM ${v.PAM_CALCULADA})</span></h4>
-                <p>SpO2: <strong>${v.SPO2_PORCENTAJE}%</strong> • Pulso: ${v.PULSO_LPM} lpm • ${v.CONTEXTO} (${fStr})</p>
-                ${v.NOTAS ? `<span class="audit-tag">👤 ${v.NOTAS}</span>` : ''}
-              </div>
-              <span style="font-size:0.72rem; font-weight:800; color:${badgeColor}; flex-shrink:0;">${v.NIVEL_ALERTA}</span>
+            <div class="dose-info">
+              <h4>P/A: ${v.SISTOLICA_MMHG}/${v.DIASTOLICA_MMHG} mmHg <span style="font-size:0.78rem; color:var(--accent-cyan);">(PAM ${v.PAM_CALCULADA})</span> — <span style="color:${badgeColor};">${v.NIVEL_ALERTA}</span></h4>
+              <p>SpO2: <strong>${v.SPO2_PORCENTAJE}%</strong> • Pulso: ${v.PULSO_LPM} lpm • ${v.CONTEXTO} (${fStr})</p>
+              ${v.NOTAS ? `<span class="audit-tag">👤 ${v.NOTAS}</span>` : ''}
             </div>
           </div>
         `;
@@ -1454,7 +1417,7 @@
         document.getElementById('kpi-pa-avg').textContent = `${avgPas}/${avgPad}`;
         document.getElementById('kpi-pam-avg').textContent = `P/A Prom (PAM ${avgPam})`;
         document.getElementById('kpi-spo2-avg').textContent = `${avgSpo2}%`;
-        document.getElementById('kpi-spo2-min').textContent = `SpO2 Prom (Mín ${minSpo2}%)`;
+        document.getElementById('kpi-spo2-min').textContent = `SpO2 (Mín ${minSpo2}%)`;
       } else {
         document.getElementById('kpi-pa-avg').textContent = '--/--';
         document.getElementById('kpi-spo2-avg').textContent = '--%';
@@ -1517,11 +1480,11 @@
           responsive: true,
           maintainAspectRatio: false,
           plugins: {
-            legend: { labels: { color: '#CBD5E1', font: { size: 11 }, boxWidth: 20 } }
+            legend: { labels: { color: '#CBD5E1', font: { size: 10 }, boxWidth: 16 } }
           },
           scales: {
-            x: { ticks: { color: '#94A3B8', maxRotation: 40, font: { size: 10 } }, grid: { color: 'rgba(255,255,255,0.05)' } },
-            y: { ticks: { color: '#94A3B8' }, grid: { color: 'rgba(255,255,255,0.08)' }, suggestedMin: 55, suggestedMax: 160 }
+            x: { ticks: { color: '#94A3B8', maxRotation: 40, font: { size: 9 } }, grid: { color: 'rgba(255,255,255,0.05)' } },
+            y: { ticks: { color: '#94A3B8', font: { size: 10 } }, grid: { color: 'rgba(255,255,255,0.08)' }, suggestedMin: 55, suggestedMax: 160 }
           }
         }
       });
@@ -1549,11 +1512,11 @@
           responsive: true,
           maintainAspectRatio: false,
           plugins: {
-            legend: { labels: { color: '#CBD5E1', font: { size: 11 }, boxWidth: 20 } }
+            legend: { labels: { color: '#CBD5E1', font: { size: 10 }, boxWidth: 16 } }
           },
           scales: {
-            x: { ticks: { color: '#94A3B8', font: { size: 10 } }, grid: { color: 'rgba(255,255,255,0.05)' } },
-            y: { min: 85, max: 100, ticks: { color: '#94A3B8' }, grid: { color: 'rgba(255,255,255,0.08)' } }
+            x: { ticks: { color: '#94A3B8', font: { size: 9 } }, grid: { color: 'rgba(255,255,255,0.05)' } },
+            y: { min: 85, max: 100, ticks: { color: '#94A3B8', font: { size: 10 } }, grid: { color: 'rgba(255,255,255,0.08)' } }
           }
         }
       });
@@ -1608,20 +1571,13 @@
           </tbody>
         </table>
 
-        ${adjustedMeds.length > 0 ? `
-          <p style="font-size:10px; color:#475569; margin-bottom:12px;">
-            <strong>Historial de ajustes médicos previos:</strong>
-            ${adjustedMeds.map(a => `${a.NOMBRE_COMERCIAL} (${a.DOSIS_ACTUAL}${a.UNIDAD}) [${a.ESTADO} el ${a.FECHA_AJUSTE} — ${a.NOTAS_MEDICAS || ''}]`).join(' • ')}
-          </p>
-        ` : ''}
-
         <h3 style="font-size:12.5px; color:#006874; margin:12px 0 6px; text-transform:uppercase;">2. Curvas de Tendencia (${appState.chartDaysRange} Días)</h3>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; background:#0F172A; padding:12px; border-radius:8px; margin-bottom:14px;">
           <div><img src="${bpImg}" style="width:100%; height:auto;" /></div>
           <div><img src="${spo2Img}" style="width:100%; height:auto;" /></div>
         </div>
 
-        <h3 style="font-size:12.5px; color:#006874; margin:12px 0 6px; text-transform:uppercase;">3. Bitácora de Lecturas y Auditoría de Cuidadores</h3>
+        <h3 style="font-size:12.5px; color:#006874; margin:12px 0 6px; text-transform:uppercase;">3. Bitácora de Lecturas y Auditoría</h3>
         <table style="width:100%; border-collapse:collapse; font-size:10px;">
           <thead>
             <tr style="background:#006874; color:#FFFFFF; text-align:left;">
@@ -1864,7 +1820,7 @@
       const vapid = document.getElementById('cfg-vapid-key').value.trim() || DEFAULT_VAPID_PUBLIC_KEY;
 
       if (!caregiver) {
-        alert('👤 Por favor ingresa tu nombre de Cuidador/Familiar para identificar tus registros.');
+        alert('👤 Por favor ingresa tu nombre de Cuidador/Familiar.');
         return;
       }
 
@@ -1934,7 +1890,7 @@
           webhook_url: autoWebhookUrl
         });
 
-        alert(`✅ ¡Listo, ${caregiver}! Tu celular quedó registrado en el grupo de cuidadores y recibirá todas las alertas Push.`);
+        alert(`✅ ¡Listo, ${caregiver}! Tu celular quedó registrado en el grupo de cuidadores.`);
       } catch (err) {
         alert('Error al suscribir Web Push: ' + err.message);
       }
@@ -1947,49 +1903,25 @@
       renderMedicationLists();
     }
 
-    window.addEventListener('online', () => {
-      const el = document.getElementById('net-status');
-      el.textContent = 'ONLINE';
-      el.classList.remove('offline');
-      flushOfflineOutbox();
-    });
-
-    window.addEventListener('offline', () => {
-      const el = document.getElementById('net-status');
-      el.textContent = 'OFFLINE';
-      el.classList.add('offline');
-    });
-
     window.addEventListener('DOMContentLoaded', async () => {
+      // Si es la primera vez que entra a v6, purga automáticamente cachés viejos (v1-v5)
+      if (localStorage.getItem('DPIX_LAST_UI_VER') !== APP_UI_VERSION && 'caches' in window) {
+        const keys = await caches.keys();
+        for (const k of keys) {
+          await caches.delete(k);
+        }
+        localStorage.setItem('DPIX_LAST_UI_VER', APP_UI_VERSION);
+      }
+
       if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('./sw.js').catch(err => console.warn('SW Error:', err));
-        navigator.serviceWorker.addEventListener('message', event => {
-          if (event.data && event.data.type === 'NOTIFICATION_ACTION') {
-            if (event.data.action === 'CONFIRM_DOSE') {
-              const nd = event.data.data;
-              if (nd && nd.id_toma && nd.id_med) {
-                confirmDoseById(nd.id_toma, nd.id_med, nd.nombre || 'Medicamento', nd.dosis_txt || '', nd.hora || '08:00');
-              } else if (appState.nextHeroDose) {
-                const d = appState.nextHeroDose;
-                confirmDoseById(d.id_toma, d.id_med, d.nombre, d.dosis_txt, d.hora);
-              }
-            }
-          }
-        });
+        navigator.serviceWorker.register('./sw.js?v=6', { updateViaCache: 'none' }).then(reg => {
+          reg.update();
+        }).catch(err => console.warn('SW Error:', err));
       }
 
       await initIndexedDB();
       await loadLocalState();
       refreshAllUI();
-
-      const urlParams = new URLSearchParams(window.location.search);
-      const tomaParam = urlParams.get('toma');
-      const actionParam = urlParams.get('action');
-      if (tomaParam && actionParam === 'CONFIRM_DOSE' && appState.nextHeroDose && appState.nextHeroDose.id_toma === tomaParam) {
-        const d = appState.nextHeroDose;
-        await confirmDoseById(d.id_toma, d.id_med, d.nombre, d.dosis_txt, d.hora);
-        window.history.replaceState({}, document.title, './index.html');
-      }
 
       if (!localStorage.getItem('DPIX_CAREGIVER_NAME') || !localStorage.getItem('DPIX_GAS_URL')) {
         openConfigModal();
